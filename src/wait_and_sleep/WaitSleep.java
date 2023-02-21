@@ -33,8 +33,22 @@ public class WaitSleep {
                 }
             }
         });
+        Thread t3 = new Thread(() -> {
+            synchronized (lock) {
+                lock.notify();
+                System.out.println("线程3获取到了锁");
+                try {
+                    lock.wait();
+                    System.out.println("线程3被唤醒");
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
 
         t1.start();
         t2.start();
+        t3.start();
+
     }
 }
